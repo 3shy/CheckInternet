@@ -20,7 +20,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Checker {
-    String host= "www.google.com" ; int port = 80 ;
 
 
 
@@ -118,7 +117,7 @@ public class Checker {
         toast.show();
 
     }
-    public static void  NoEnternet (Activity context,String message){
+    private static void  NoEnternet (Activity context,String message){
 
         LayoutInflater inflater = context.getLayoutInflater();
         View layout = inflater.inflate(R.layout.no_internet, (ViewGroup) context.findViewById(R.id.custom_toast_layout));
