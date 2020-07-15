@@ -1,3 +1,6 @@
+
+#  
+بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ
 # CheckInternet
 
 # setup
@@ -11,6 +14,8 @@
   
 
 	dependencies {
-	        implementation 'com.github.Mohamed3shry:CheckInternet:Tag'
-	}
+	
+	        implementation 'com.github.3shy:CheckInternet:1.2.0'
+		
+}
 
