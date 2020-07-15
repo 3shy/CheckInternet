@@ -24,7 +24,7 @@ public class Checker {
 
 
 
-    public static void onNetworkStateChange(final Activity activity , final String message) {
+    public static void onNetworkStateChange(final Activity activity) {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
@@ -32,7 +32,9 @@ public class Checker {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            HelloEnternet(activity,message);
+                          //  HelloEnternet(activity,message);
+                                    Toast.makeText(activity, "have Internet", Toast.LENGTH_SHORT).show();
+
 
                         }
 
@@ -42,7 +44,9 @@ public class Checker {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            NoEnternet(activity,"No Internet");
+                          //  NoEnternet(activity,"No Internet");
+                                 Toast.makeText(activity, "Don't have Internet", Toast.LENGTH_SHORT).show();
+
 
                         }
                     });
