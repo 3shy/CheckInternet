@@ -29,39 +29,29 @@ public class Checker {
             @Override
             public void onAvailable(Network network) {
                 if (hasActiveInternetConnection(activity)) {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                   
                           //  HelloEnternet(activity,message);
                                     Toast.makeText(activity, "have Internet", Toast.LENGTH_SHORT).show();
 
 
-                        }
-
-                    });
+                      
+                    
 
                 } else {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                   
                           //  NoEnternet(activity,"No Internet");
                                  Toast.makeText(activity, "Don't have Internet", Toast.LENGTH_SHORT).show();
 
 
-                        }
-                    });
                 }
             }
 
             @Override
             public void onLost(Network network) {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                
                         Toast.makeText(activity, "I lost contact", Toast.LENGTH_SHORT).show();
 
-                    }
-                });
+                   
 
 
             }
@@ -91,13 +81,10 @@ public class Checker {
                 Log.e("TAG", "Error checking internet connection", e);
             }
         } else {
-            context.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+           
                     Toast.makeText(context, "No Internet", Toast.LENGTH_SHORT).show();
 
-                }
-            });
+            
         }
         return false;
     }
