@@ -95,31 +95,7 @@ public class Checker {
         return cm.getActiveNetworkInfo() != null;
     }
 
-    private static void  HelloEnternet (Activity context,String message){
-
-        LayoutInflater inflater = context.getLayoutInflater();
-        View layout = inflater.inflate(R.layout.have_internet, (ViewGroup) context.findViewById(R.id.custom_toast_layout));
-        TextView tv = (TextView) layout.findViewById(R.id.txtvw);
-        tv.setText(message);
-        Toast toast = new Toast(context.getApplicationContext());
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 600);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
-
-    }
-    private static void  NoEnternet (Activity context,String message){
-
-        LayoutInflater inflater = context.getLayoutInflater();
-        View layout = inflater.inflate(R.layout.no_internet, (ViewGroup) context.findViewById(R.id.custom_toast_layout));
-        TextView tv = (TextView) layout.findViewById(R.id.txtvw);
-        tv.setText(message);
-        Toast toast = new Toast(context.getApplicationContext());
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 600);
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.show();
-
-    }
+   
+ 
 
 }
