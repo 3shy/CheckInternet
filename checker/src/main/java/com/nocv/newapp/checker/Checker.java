@@ -95,7 +95,9 @@ public class Checker {
         return cm.getActiveNetworkInfo() != null;
     }
 
-   
+   public static int ashry(int a , int b ){
+           return a+b ;
+   }
  
 
 }
