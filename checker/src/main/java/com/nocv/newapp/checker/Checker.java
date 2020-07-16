@@ -1,0 +1,135 @@
+package com.nocv.newapp.checker;
+
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
+import android.os.Build;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class Checker {
+    String host= "www.google.com" ; int port = 80 ;
+
+
+
+
+    public static void onNetworkStateChange(final Activity activity , final String message) {
+        ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(Network network) {
+                if (hasActiveInternetConnection(activity)) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HelloEnternet(activity,message);
+
+                        }
+
+                    });
+
+                } else {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            NoEnternet(activity,"No Internet");
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onLost(Network network) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "I lost contact", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+
+            }
+        };
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            connectivityManager.registerDefaultNetworkCallback(networkCallback);
+        } else {
+            NetworkRequest request = new NetworkRequest.Builder().addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build();
+            connectivityManager.registerNetworkCallback(request, networkCallback);
+        }
+
+
+    }
+
+
+    private static boolean hasActiveInternetConnection(final Activity context) {
+        if (hasInternet(context)) {
+            try {
+                URL url = new URL("https://www.google.com");
+                HttpURLConnection connection = (HttpURLConnection) (url).openConnection();
+                connection.setConnectTimeout(5000);
+                connection.connect();
+                return (connection.getResponseCode() == 200 );
+            } catch (IOException e) {
+                Log.e("TAG", "Error checking internet connection", e);
+            }
+        } else {
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, "No Internet", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+        return false;
+    }
+
+    private static boolean hasInternet(Activity context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        assert cm != null;
+        return cm.getActiveNetworkInfo() != null;
+    }
+
+    private static void  HelloEnternet (Activity context,String message){
+
+        LayoutInflater inflater = context.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.have_internet, (ViewGroup) context.findViewById(R.id.custom_toast_layout));
+        TextView tv = (TextView) layout.findViewById(R.id.txtvw);
+        tv.setText(message);
+        Toast toast = new Toast(context.getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 600);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+
+    }
+    public static void  NoEnternet (Activity context,String message){
+
+        LayoutInflater inflater = context.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.no_internet, (ViewGroup) context.findViewById(R.id.custom_toast_layout));
+        TextView tv = (TextView) layout.findViewById(R.id.txtvw);
+        tv.setText(message);
+        Toast toast = new Toast(context.getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 600);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+
+    }
+
+}

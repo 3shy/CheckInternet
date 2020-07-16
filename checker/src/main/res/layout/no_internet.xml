@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:gravity="center"
+    android:id="@+id/custom_toast_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_gravity="center"
+        android:src="@drawable/wifiof"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:layout_margin="10dp" />
+    <TextView
+        android:id="@+id/txtvw"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="you Have Internet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF0000"
+        android:textStyle="bold"
+        />
+</LinearLayout>
+
