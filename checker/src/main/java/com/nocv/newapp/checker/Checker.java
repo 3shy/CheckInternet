@@ -98,6 +98,12 @@ public class Checker {
    public static int ashry(int a , int b ){
            return a+b ;
    }
+    
+    public static void ashry2(int a , int b ){
+           int c = a+b ;
+       Toast.makeText(context, ""+c, Toast.LENGTH_SHORT).show();
+
+   }
  
 
 }
