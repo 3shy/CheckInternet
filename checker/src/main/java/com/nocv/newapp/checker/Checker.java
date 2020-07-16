@@ -25,7 +25,7 @@ public class Checker {
 
     public static boolean status ;
 
-    public static void onNetworkStateChange(final Activity activity) {
+    public static void onNetworkStateChange(Context activity) {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
@@ -66,7 +66,7 @@ public class Checker {
     }
 
 
-    private static boolean hasActiveInternetConnection(final Activity context) {
+    private static boolean hasActiveInternetConnection(Context context) {
         if (hasInternet(context)) {
             try {
                 URL url = new URL("https://www.google.com");
@@ -86,7 +86,7 @@ public class Checker {
         return false;
     }
 
-    private static boolean hasInternet(Activity context) {
+    private static boolean hasInternet(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;
         return cm.getActiveNetworkInfo() != null;
@@ -96,7 +96,7 @@ public class Checker {
            return a+b ;
    }
     
-    public static void ashry2(Context context,int a , int b ){
+    public static void ashry2(Activity context,int a , int b ){
         
            int c = a+b ;
        Toast.makeText(context, ""+c, Toast.LENGTH_SHORT).show();
