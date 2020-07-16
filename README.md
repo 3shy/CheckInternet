@@ -18,9 +18,9 @@
 
 
 # Installing
-
-		repositories {
-			...
+```ruby
+	repositories {
+			
 			maven { url 'https://jitpack.io' }
 		}
 	
@@ -30,16 +30,23 @@
 	dependencies {
 	implementation 'com.github.3shy:CheckInternet:2.0.0'
 	}
+```
 	
 # Permissions	
-
+```ruby
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	
+```
 	
 
 # Quick Example
+
+
+```ruby
+
+
+
 
 	import com.nocv.newapp.checker.Checker;
 	import com.nocv.newapp.checker.interfaced.Monitor;
@@ -77,14 +84,16 @@
 			super.onStop();
 		 }
 	}
-
+```
 
   
 
 # Author
 
 Mohamed Ashry [GitHub 3shry](https://github.com/3shy).
+
 Mohamed Ashry [FaceBook 3shry](facebook.com/mohmed.ashry.716/).
+
 Mohamed Ashry [Linkedin](https://www.linkedin.com/in/mohamed-ashry-b8758813a/).
 
 
