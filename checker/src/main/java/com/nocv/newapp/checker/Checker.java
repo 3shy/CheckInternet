@@ -22,39 +22,39 @@ import java.net.URL;
 public class Checker {
 
 
+   public static boolean status ;
+    public static Context context ;
 
-    public static boolean status ;
-
-    public static void onNetworkStateChange(Context activity) {
+    public static void onNetworkStateChange() {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
                 if (hasActiveInternetConnection()) {
-                   
-                   status = true;
 
-                      
-                    
+                    status = true;
+
+
+
 
                 } else {
-                   
-                          //  NoEnternet(activity,"No Internet");
-                   status = false;
+
+                    //  NoEnternet(activity,"No Internet");
+                    status = false;
 
                 }
             }
 
             @Override
             public void onLost(Network network) {
-                
-                    status = false;
-                   
+
+                status = false;
+
 
 
             }
         };
 
-        ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             connectivityManager.registerDefaultNetworkCallback(networkCallback);
         } else {
@@ -67,7 +67,7 @@ public class Checker {
 
 
     private static boolean hasActiveInternetConnection() {
-        if (hasInternet(context)) {
+        if (hasInternet()) {
             try {
                 URL url = new URL("https://www.google.com");
                 HttpURLConnection connection = (HttpURLConnection) (url).openConnection();
@@ -77,29 +77,29 @@ public class Checker {
             } catch (IOException e) {
             }
         } else {
-           status = false;
+            status = false;
 
-            
+
         }
         return false;
     }
 
-    private static boolean hasInternet(Context context) {
+    private static boolean hasInternet() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;
         return cm.getActiveNetworkInfo() != null;
     }
 
-   public static int ashry(int a , int b ){
-           return a+b ;
-   }
-    
-    public static void ashry2(Activity context,int a , int b ){
-        
-           int c = a+b ;
-       Toast.makeText(context, ""+c, Toast.LENGTH_SHORT).show();
+    public static int ashry(int a , int b ){
+        return a+b ;
+    }
 
-   }
- 
+    public static void ashry2(int a , int b ){
+
+        int c = a+b ;
+        Toast.makeText(context, ""+c, Toast.LENGTH_SHORT).show();
+
+    }
+
 
 }
