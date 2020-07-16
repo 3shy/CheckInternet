@@ -1,105 +1,65 @@
 package com.nocv.newapp.checker;
 
-import android.app.Activity;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
-import android.os.Build;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.nocv.newapp.checker.interfaced.Monitor;
+import com.nocv.newapp.checker.monitor.DefaultMonitorFactory;
+
+import java.lang.ref.WeakReference;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Checker {
+    private static final String TAG = "Tovuti";
+    private static final Object lock = new Object();
 
+    private static volatile Checker checker;
+    private WeakReference<Context> contextRef;
+    private Set<Monitor> monitors;
 
-   public static boolean status ;
-    public static Context context ;
+    private Checker(Context context) {
+        monitors = new HashSet<>();
+        this.contextRef = new WeakReference<>(context);
+    }
 
-    public static void onNetworkStateChange() {
-        ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onAvailable(Network network) {
-                if (hasActiveInternetConnection()) {
-
-                    status = true;
-
-
-
-
-                } else {
-
-                    //  NoEnternet(activity,"No Internet");
-                    status = false;
-
+    public static Checker from(Context context) {
+        if (checker == null) {
+            synchronized (lock) {
+                if (checker == null) {
+                    checker = new Checker(context);
                 }
             }
+        }
+        return checker;
+    }
 
-            @Override
-            public void onLost(Network network) {
+    public Checker monitor(int connectionType, Monitor.ConnectivityListener listener) {
+        Context context = contextRef.get();
+        if (context != null)
+            monitors.add(new DefaultMonitorFactory().create(context, connectionType, listener));
 
-                status = false;
+        start();
+        return checker;
+    }
 
+    public Checker monitor(Monitor.ConnectivityListener listener) {
+        return monitor(-1, listener);
+    }
 
-
-            }
-        };
-
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            connectivityManager.registerDefaultNetworkCallback(networkCallback);
-        } else {
-            NetworkRequest request = new NetworkRequest.Builder().addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build();
-            connectivityManager.registerNetworkCallback(request, networkCallback);
+    public void start() {
+        for (Monitor monitor : monitors) {
+            monitor.onStart();
         }
 
-
+        if (monitors.size() > 0)
+            Log.i(TAG, "started tovuti");
     }
 
-
-    private static boolean hasActiveInternetConnection() {
-        if (hasInternet()) {
-            try {
-                URL url = new URL("https://www.google.com");
-                HttpURLConnection connection = (HttpURLConnection) (url).openConnection();
-                connection.setConnectTimeout(5000);
-                connection.connect();
-                return (connection.getResponseCode() == 200 );
-            } catch (IOException e) {
-            }
-        } else {
-            status = false;
-
-
+    public void stop() {
+        for (Monitor monitor : monitors) {
+            monitor.onStop();
         }
-        return false;
     }
-
-    private static boolean hasInternet() {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        assert cm != null;
-        return cm.getActiveNetworkInfo() != null;
-    }
-
-    public static int ashry(int a , int b ){
-        return a+b ;
-    }
-
-    public static void ashry2(int a , int b ){
-
-        int c = a+b ;
-        Toast.makeText(context, ""+c, Toast.LENGTH_SHORT).show();
-
-    }
-
 
 }
