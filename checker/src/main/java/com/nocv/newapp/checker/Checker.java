@@ -23,6 +23,7 @@ public class Checker {
 
 
 
+    public static boolean status ;
 
     public static void onNetworkStateChange(final Activity activity) {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
@@ -30,9 +31,7 @@ public class Checker {
             public void onAvailable(Network network) {
                 if (hasActiveInternetConnection(activity)) {
                    
-                          //  HelloEnternet(activity,message);
-                                    Toast.makeText(activity, "have Internet", Toast.LENGTH_SHORT).show();
-
+                   status = true;
 
                       
                     
@@ -40,8 +39,7 @@ public class Checker {
                 } else {
                    
                           //  NoEnternet(activity,"No Internet");
-                                 Toast.makeText(activity, "Don't have Internet", Toast.LENGTH_SHORT).show();
-
+                   status = false;
 
                 }
             }
@@ -49,8 +47,7 @@ public class Checker {
             @Override
             public void onLost(Network network) {
                 
-                        Toast.makeText(activity, "I lost contact", Toast.LENGTH_SHORT).show();
-
+                    status = false;
                    
 
 
