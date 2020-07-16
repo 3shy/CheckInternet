@@ -29,7 +29,7 @@ public class Checker {
         ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
-                if (hasActiveInternetConnection(activity)) {
+                if (hasActiveInternetConnection()) {
                    
                    status = true;
 
@@ -66,7 +66,7 @@ public class Checker {
     }
 
 
-    private static boolean hasActiveInternetConnection(Context context) {
+    private static boolean hasActiveInternetConnection() {
         if (hasInternet(context)) {
             try {
                 URL url = new URL("https://www.google.com");
@@ -75,11 +75,9 @@ public class Checker {
                 connection.connect();
                 return (connection.getResponseCode() == 200 );
             } catch (IOException e) {
-                Log.e("TAG", "Error checking internet connection", e);
             }
         } else {
-           
-                    Toast.makeText(context, "No Internet", Toast.LENGTH_SHORT).show();
+           status = false;
 
             
         }
